@@ -1,6 +1,25 @@
-- name: Build Docker Image
-  uses: docker/build-push-action@v5
-  with:
-    context: .
-    push: false
-    tags: test-image:latest
+name: Build Docker Image Locally
+
+on:
+  push:
+    branches:
+      - main  # Change if your default branch is different
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker Image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: false  # No DockerHub push
+          tags: test-image:latest
+d
